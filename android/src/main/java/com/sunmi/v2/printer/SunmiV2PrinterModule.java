@@ -961,50 +961,6 @@ public class SunmiV2PrinterModule extends ReactContextBaseJavaModule {
         });
     }
     
-        @ReactMethod
-    public void printQRCode(String data, int modulesize, int errorlevel, final Promise p) {
-        final IWoyouService ss = woyouService;
-        Log.i(TAG, "come: ss:" + ss);
-        final String d = data;
-        final int size = modulesize;
-        final int level = errorlevel;
-        ThreadPoolManager.getInstance().executeTask(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ss.printQRCode(d, size, level, new ICallback.Stub() {
-                        @Override
-                        public void onPrintResult(int par1, String par2) {
-                            Log.d(TAG, "ON PRINT RES: " + par1 + ", " + par2);
-                        }
-
-                        @Override
-                        public void onRunResult(boolean isSuccess) {
-                            if (isSuccess) {
-                                p.resolve(null);
-                            } else {
-                                p.reject("0", isSuccess + "");
-                            }
-                        }
-
-                        @Override
-                        public void onReturnString(String result) {
-                            p.resolve(result);
-                        }
-
-                        @Override
-                        public void onRaiseException(int code, String msg) {
-                            p.reject("" + code, msg);
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.i(TAG, "ERROR: " + e.getMessage());
-                    p.reject("" + 0, e.getMessage());
-                }
-            }
-        });
-    }
     
     @ReactMethod
 public void printQRCodeWithoutPromise(String data, int modulesize, int errorlevel) {
