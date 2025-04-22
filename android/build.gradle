@@ -23,11 +23,13 @@ android {
     lintOptions {
         abortOnError false
     }
-     sourceSets {
-    main {
-          aidl.srcDirs = ['src/main/java']
-      }
-  }
+
+    buildFeatures.aidl true
+    sourceSets {
+        main {
+            aidl.srcDirs = ['src/main/java']
+        }
+    }
 }
 
 repositories {
